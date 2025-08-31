@@ -1,4 +1,5 @@
 import { Button, Grid } from '@material-ui/core';
+import { CustomEntityAbout } from './CustomEntityAbout';
 import {
   EntityApiDefinitionCard,
   EntityConsumedApisCard,
@@ -125,19 +126,12 @@ const entityWarningContent = (
 );
 
 const overviewContent = (
-  <Grid container spacing={3} alignItems="stretch">
+  <Grid container spacing={3}>
     {entityWarningContent}
-    <Grid item md={6}>
-      <EntityAboutCard variant="gridItem" />
+    <Grid item xs={12}>
+      <CustomEntityAbout />
     </Grid>
-    <Grid item md={6} xs={12}>
-      <EntityCatalogGraphCard variant="gridItem" height={400} />
-    </Grid>
-
-    <Grid item md={4} xs={12}>
-      <EntityLinksCard />
-    </Grid>
-    <Grid item md={8} xs={12}>
+    <Grid item xs={12}>
       <EntityHasSubcomponentsCard variant="gridItem" />
     </Grid>
   </Grid>
@@ -149,27 +143,16 @@ const serviceEntityPage = (
       {overviewContent}
     </EntityLayout.Route>
 
-    <EntityLayout.Route path="/ci-cd" title="CI/CD">
-      {cicdContent}
-    </EntityLayout.Route>
-
     <EntityLayout.Route
-      path="/kubernetes"
-      title="Kubernetes"
+      path="/environments"
+      title="Environments"
       if={isKubernetesAvailable}
     >
       <EntityKubernetesContent />
     </EntityLayout.Route>
 
-    <EntityLayout.Route path="/api" title="API">
-      <Grid container spacing={3} alignItems="stretch">
-        <Grid item md={6}>
-          <EntityProvidedApisCard />
-        </Grid>
-        <Grid item md={6}>
-          <EntityConsumedApisCard />
-        </Grid>
-      </Grid>
+    <EntityLayout.Route path="/repos-pipelines" title="Repos & Pipelines">
+      {cicdContent}
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/dependencies" title="Dependencies">
@@ -195,16 +178,16 @@ const websiteEntityPage = (
       {overviewContent}
     </EntityLayout.Route>
 
-    <EntityLayout.Route path="/ci-cd" title="CI/CD">
-      {cicdContent}
-    </EntityLayout.Route>
-
     <EntityLayout.Route
-      path="/kubernetes"
-      title="Kubernetes"
+      path="/environments"
+      title="Environments"
       if={isKubernetesAvailable}
     >
       <EntityKubernetesContent />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/repos-pipelines" title="Repos & Pipelines">
+      {cicdContent}
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/dependencies" title="Dependencies">

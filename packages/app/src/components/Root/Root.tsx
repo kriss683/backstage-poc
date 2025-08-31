@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, InputBase, IconButton } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import LogoFull from './LogoFull';
 import {
   Settings as SidebarSettings,
@@ -9,6 +10,7 @@ import {
   Link,
 } from '@backstage/core-components';
 import { NotificationsSidebarItem } from '@backstage/plugin-notifications';
+import { useNavigate } from 'react-router-dom';
 
 const useHeaderStyles = makeStyles({
   root: {
@@ -33,6 +35,8 @@ const useHeaderStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     gap: 48,
+    flex: 1,
+    minWidth: 0,
   },
   navigation: {
     display: 'flex',
@@ -56,6 +60,25 @@ const useHeaderStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     gap: 16,
+    flexShrink: 0,
+  },
+  searchContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 24,
+    padding: '4px 16px',
+    marginLeft: 32,
+    width: 250,
+    maxWidth: 250,
+  },
+  searchInput: {
+    marginLeft: 8,
+    flex: 1,
+    fontSize: 14,
+  },
+  searchIcon: {
+    color: '#666',
   },
   content: {
     flex: 1,
@@ -65,6 +88,16 @@ const useHeaderStyles = makeStyles({
 
 export const Root = ({ children }: PropsWithChildren<{}>) => {
   const classes = useHeaderStyles();
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const query = formData.get('search') as string;
+    if (query?.trim()) {
+      navigate(`/search?query=${encodeURIComponent(query.trim())}`);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -74,12 +107,22 @@ export const Root = ({ children }: PropsWithChildren<{}>) => {
             <LogoFull />
           </Link>
           <nav className={classes.navigation}>
-            <Link to="/catalog" className={classes.navItem}>Home</Link>
-            <Link to="/api-docs" className={classes.navItem}>APIs</Link>
-            <Link to="/docs" className={classes.navItem}>Docs</Link>
-            <Link to="/create" className={classes.navItem}>Create</Link>
-            <Link to="/search" className={classes.navItem}>Search</Link>
+            <Link to="/" className={classes.navItem}>Home</Link>
+            <Link to="/catalog" className={classes.navItem}>Inventory</Link>
+            <Link to="/manage-apps" className={classes.navItem}>Manage Apps</Link>
+            <Link to="/docs" className={classes.navItem}>Docs & Support</Link>
           </nav>
+          <form onSubmit={handleSearchSubmit}>
+            <div className={classes.searchContainer}>
+              <SearchIcon className={classes.searchIcon} />
+              <InputBase
+                name="search"
+                placeholder="Search..."
+                className={classes.searchInput}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </div>
+          </form>
         </div>
         <div className={classes.rightSection}>
           <NotificationsSidebarItem />
