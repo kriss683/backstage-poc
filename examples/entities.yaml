@@ -22,6 +22,21 @@ spec:
   system: e1-name
   providesApis: [example-grpc-api]
 ---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-ui
+  description: Handles payment ux
+  annotations:
+    github.com/project-slug: ebusiness/payments-ui
+  tags: [tep-yes]
+spec:
+  type: service
+  lifecycle: experimental
+  owner: payments-team
+  system: e1-name
+---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
 apiVersion: backstage.io/v1alpha1
 kind: API
