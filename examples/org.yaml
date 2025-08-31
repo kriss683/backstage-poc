@@ -15,3 +15,38 @@ metadata:
 spec:
   type: team
   children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: pbt-value-stream
+  description: Value stream responsible for end-to-end e-commerce flow
+  tags: [lob-corptech]
+spec:
+  type: team
+  children: [billing-and-payments-circle]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: billing-and-payments-circle
+  description: Circle responsible for Billing and Payments
+  tags: [lob-corptech]
+spec:
+  type: team
+  parent: pbt-value-stream
+  children: [payments-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: payments-team
+  description: Team responsible for payment processing
+  tags: [lob-corptech]
+  annotations:
+    slack.com/channel: '#payments-team'
+spec:
+  type: team
+  parent: billing-and-payments-circle
+  children: []
+

@@ -3,20 +3,23 @@
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: examples
+  name: Payments-System
 spec:
-  owner: guests
+  owner: billing-and-paymentscircle
 ---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: example-website
+  name: payment-processing-service
+  description: Handles payment processing
+  annotations:
+    github.com/project-slug: ebusiness/payments-service
 spec:
-  type: website
+  type: service
   lifecycle: experimental
-  owner: guests
-  system: examples
+  owner: payments-team
+  system: e1-name
   providesApis: [example-grpc-api]
 ---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
